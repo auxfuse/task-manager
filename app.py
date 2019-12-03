@@ -20,6 +20,16 @@ def get_tasks():
 def add_task():
     return render_template('addtask.html', categories=mongo.db.categories.find())
 
+'''Form submission to take currently filled fields to create a new document in our tasks collection.
+We convert the form to a dict so it can be easily understood by Mongo. In reality we would also add form validation here
+and as part of html check.'''
+@app.route('/insert_task', methods=['POST'])
+def insert_task():
+    tasks = mongo.db.tasks
+    tasks.insert_one(request.form.to_dict())
+    return redirect(url_for('get_tasks'))
+# Good practice to return the user to the task page once document is created in DB.
+
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'),
             port=os.environ.get('PORT'),
