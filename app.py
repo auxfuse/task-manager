@@ -1,7 +1,9 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
+# Using bson objectId to convert the ID being passed from our template into a readable format for MongoDB.
 from bson.objectid import ObjectId
+
 
 app = Flask(__name__)
 
@@ -20,15 +22,27 @@ def get_tasks():
 def add_task():
     return render_template('addtask.html', categories=mongo.db.categories.find())
 
-'''Form submission to take currently filled fields to create a new document in our tasks collection.
+"""Form submission to take currently filled fields to create a new document in our tasks collection.
 We convert the form to a dict so it can be easily understood by Mongo. In reality we would also add form validation here
-and as part of html check.'''
+and as part of html check."""
 @app.route('/insert_task', methods=['POST'])
 def insert_task():
     tasks = mongo.db.tasks
     tasks.insert_one(request.form.to_dict())
     return redirect(url_for('get_tasks'))
 # Good practice to return the user to the task page once document is created in DB.
+
+"""Create associated function that will react to the 'edit' button being clicked to edit the properties associated
+with just that singular task. Fetch the task that matches the task ID using the mongo ID as parameter alongside the value
+returned from our BSON objectID."""
+@app.route('/edit_task/<task_id>')
+def edit_task(task_id):
+    the_task = mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
+    # 2nd thing to do is to list the collections because we're going to use the task that's returned from MongoDB.
+    # and all the categories to populate the form for editing, instead of showing a blank form like add_task....
+    all_categories = mongo.db.categories.find()
+    return render_template('edittask.html', task=the_task, categories=all_categories)
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'),
