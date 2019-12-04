@@ -4,7 +4,18 @@
     <ul class="collapsible">
         {% for task in tasks %}
         <li>
-            <div class="collapsible-header"><i class="material-icons">expand_more</i>{{task.category_name}} - <strong>{{task.task_name}}</strong> - {{task.due_date}}</div>
+            <div class="row">
+                <div class="collapsible-header">
+                    <div class="col s3">
+                        <i class="material-icons expand_chev">expand_more</i>
+                        <a class="waves-effect waves-light btn btn_small">Edit</a>
+                        <a class="waves-effect waves-light btn btn_small blue">Done</a>
+                    </div>
+                    <div class="col s9">
+                        <div class="task_header">{{task.category_name}} - <strong>{{task.task_name}}</strong> - {{task.due_date}}</div>
+                    </div>
+                </div>
+            </div>
             <div class="collapsible-body"><span>{{task.task_description}}</span></div>
         </li>
         {% endfor %}

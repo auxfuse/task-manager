@@ -1,3 +1,11 @@
-body {
-    background-color: aquamarine;
+.btn_small {
+    height: 24px;
+    width: 60px;
+    line-height: 24px;
+    margin: 5px;
+    padding: 0 0.5em;
+}
+
+.expand_chev, .task_header {
+    margin-top: 10px;
 }
