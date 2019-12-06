@@ -3,12 +3,12 @@
 
     <h3>Edit Category</h3>
     <div class="row">
-        <!-- Form action to be set to the url of the function of 'insert_task' -->
-        <form action="{{ url_for('edit_category', category_id=category._id) }}" method="POST" class="col s12">
+        <!-- Form action to be set to the url of the function of 'update_category' -->
+        <form action="{{ url_for('update_category', category_id=category._id) }}" method="POST" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">poll</i>
-                    <input id="category_name" name="category_name" type="text" class="validate" value="{{categories.category_name}}">
+                    <input id="category_name" name="category_name" type="text" class="validate" value="{{category.category_name}}">
                     <label for="category_name">Category Name</label>
                 </div>
             </div>
